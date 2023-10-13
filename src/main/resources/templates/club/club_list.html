@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/layout :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
 <head>
     <meta charset="UTF-8">
     <title>list</title>
     <link href="/css/club.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -27,7 +30,7 @@
         <tbody>
         <tr th:each="dto : ${listPage.clubBoardDtos}">
             <td>[[${dto.clubboard_id}]]</td>
-            <td>[[${dto.clubboard_emp_name}]]</a></td>
+            <td>[[${dto.clubboard_emp_name}]] ( [[${dto.clubboard_dept_name}]] )</td>
             <td><a th:href="@{'/club/view?clubboard_id=' + ${dto.clubboard_id}}">[[${dto.clubboard_title}]]</a></td>
             <td>[[${#dates.format(dto.clubboard_regdate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
         </tr>
@@ -82,5 +85,8 @@
         <a class="button-writego" th:href="@{'/club/write'}">게시글쓰기</a>
     </div>
 </div>
+
 </body>
+    </th:block>
+</th:block>
 </html>

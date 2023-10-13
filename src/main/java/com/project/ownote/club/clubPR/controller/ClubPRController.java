@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.project.ownote.club.clubPR.dto.ClubBoardDto;
 import com.project.ownote.club.clubPR.dto.ClubBoardPage;
 import com.project.ownote.club.clubPR.service.ClubPRService;
+import com.project.ownote.emp.login.dto.AuthInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.PublicKey;
 import java.util.List;
@@ -31,7 +33,9 @@ public class ClubPRController {
     }
 
     @GetMapping("club/list")
-    public String list(Model model, @RequestParam(name = "pageNo", required = false) String pageNo) {
+    public String list(Model model, @RequestParam(name = "pageNo", required = false) String pageNo, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        model.addAttribute("authInfo", authInfo);
         int pageSize = 4; // 페이지 크기 설정 (한 페이지에 보여줄 회원 수)
         int pageNum = 1;
         try {
@@ -66,12 +70,16 @@ public class ClubPRController {
     }*/
 
     @GetMapping("/club/write")
-    public String boardWriteG() {
+    public String boardWriteG(HttpSession session, Model model) {
+        AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+        model.addAttribute("authInfo", authInfo);
+
         return "/club/club_write";
+
     }
 
     @PostMapping("/club/write")
-    public String boardWriteP(ClubBoardDto clubBoardDto, Model model, MultipartFile file) throws Exception{
+    public String boardWriteP(ClubBoardDto clubBoardDto, Model model, MultipartFile file, HttpSession session) throws Exception{
 
 
         clubPRService.insertClubBoard(clubBoardDto, file);
@@ -79,19 +87,20 @@ public class ClubPRController {
     }
 
     @GetMapping("/club/view")
-    public String view(@RequestParam(value = "clubboard_id") int clubboard_id, Model model) {
-
-            ClubBoardDto dto = clubPRService.selectOneClubBoard(clubboard_id);
-
-            model.addAttribute("dto", dto);
-            return "/club/club_view";
+    public String view(@RequestParam(value = "clubboard_id") int clubboard_id, Model model, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+        ClubBoardDto dto = clubPRService.selectOneClubBoard(clubboard_id);
+        model.addAttribute("authInfo", authInfo);
+        model.addAttribute("dto", dto);
+        return "/club/club_view";
 
     }
 
     @GetMapping("/club/modify")
     public String modifyBoardG(@RequestParam(value = "clubboard_id") int clubboard_id,
-                              Model model) {
-
+                              Model model, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        model.addAttribute("authInfo", authInfo);
         ClubBoardDto dto = clubPRService.selectOneClubBoard(clubboard_id);
         model.addAttribute("dto", dto);
 
@@ -100,16 +109,19 @@ public class ClubPRController {
 
     @PostMapping("/club/modify")
     public String modifyBoardP(@RequestParam("clubboard_id") int clubboard_id, ClubBoardDto clubBoardDto,
-                               Model model, MultipartFile file) throws Exception{
+                               Model model, MultipartFile file, HttpSession session) throws Exception{
 
         if(clubBoardDto.getClubboard_filename() == null && clubBoardDto.getClubboard_filepath() == null){
             ClubBoardDto clubBoardDto1 =  clubPRService.selectOneClubBoard(clubboard_id);
             clubBoardDto.setClubboard_filename(clubBoardDto1.getClubboard_filename());
             clubBoardDto.setClubboard_filepath(clubBoardDto1.getClubboard_filepath());
         }
-
+        AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+        ClubBoardDto dto = clubPRService.selectOneClubBoard(clubboard_id);
+        model.addAttribute("authInfo", authInfo);
+        model.addAttribute("dto", dto);
         clubPRService.modifyClubBoard(clubBoardDto, file);
-        return "redirect:/club/list";
+        return "/club/club_view";
     }
 
     @GetMapping("/club/delete")

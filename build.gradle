@@ -47,6 +47,7 @@ dependencies {
 // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
 //    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
 //    implementation 'com.fasterxml.jackson.core:jackson-databind'
+//    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.0.0'
 }
 
 tasks.named('test') {

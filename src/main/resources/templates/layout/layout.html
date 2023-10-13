@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,8 +13,8 @@
 <body>
 
 <header>
-    <nav id="nav2">
-        <h1>Ownote</h1>
+    <nav id="nav2" style="display: flex;padding: 30px 15px;">
+        <h1 style="font-family: 'Malgun Gothic', sans-serif; font-size: 24px; font-weight: bold; color: #000000; margin-top: 0; margin-bottom: 0;" >Ownote</h1>
         <ul class="navbar-menu">
             <li ><a th:if ="${authInfo == null}" th:href="@{/emp/logIn}">로그인</a></li>
         </ul>
@@ -65,6 +67,11 @@
   </aside>
 <script src="https://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
 
+<div class="content">
+<th:block th:replace="${content}">
+    <!-- 실제 컨텐츠 위치 -->
+</th:block>
+</div>
 </body>
-
+</th:block>
 </html>

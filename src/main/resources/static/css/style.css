@@ -1,3 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-size: 15px;
+}
+h1 {
+  font-family: 'Malgun Gothic', sans-serif !important; /* "!important" 키워드를 사용하여 덮어쓰기 */
+  font-size: 24px !important;
+}
 body, ul, li {
     margin: 0;
     padding: 0;
@@ -7,8 +19,14 @@ body, ul, li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e6e6b1;
-  padding: 8px 12px;
+  background-color: #61adf6;
+  padding: 30px 15px;
+}
+#nav2.h1_css {
+  font-size: 3rem;
+}
+#nav2.strong {
+  font-size: 3rem;
 }
 
 .navbar-menu {
@@ -29,7 +47,6 @@ body, ul, li {
   }
 
   body {
-    height: 5000px;
     /*background-color: #f6ede8;*/
     background-color: #fafaf4;
   }
@@ -40,8 +57,9 @@ body, ul, li {
   }
 
   .side-bar {
+    z-index: 1; /* 사이드 바의 층위를 조절합니다. */
     position: fixed;    
-    background-color: #e6e6b1;
+    background-color: #61adf6;
     width: var(--side-bar-width);
     min-height: var(--side-bar-height); 
     margin-top: calc((100vh - var(--side-bar-height)) / 2);
@@ -62,14 +80,14 @@ body, ul, li {
   }
 
   .side-bar ul > li:hover > a {
-    background-color: #e9e9fb;
+    background-color: #61adf6;
     border-bottom: 1px solid #999;
   }
 
   .side-bar > ul > li:hover > ul {
     display: block;
     position: absolute;
-    background-color: #e9e9fb;
+    background-color: #61adf6;
     top: 0;
     left: 100%;   
     width: 100%;    
