@@ -43,13 +43,12 @@
           </ul>
         </li>
         <li>
-          <a th:href="@{#}">게시판</a>
-          <ul>
-            <li><a th:href="@{#}">text1</a></li>
-            <li><a th:href="@{#}">text2</a></li>
-            <li><a th:href="@{#}">text3</a></li>
-            <li><a th:href="@{#}">text4</a></li>
-          </ul>
+           <a th:href="@{/board/boardmain}">게시판</a>
+            <ul>
+                <li><a th:href="@{/board/noticeList}">공지사항</a></li>
+                <li><a th:href="@{/board/forumList}">자유게시판</a></li>
+                <li><a th:href="@{/board/qaList}">Q&A</a></li>
+            </ul>
         </li>
         <li>
           <a th:href="@{#}">동아리</a>
